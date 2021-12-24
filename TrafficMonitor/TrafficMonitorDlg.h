@@ -90,6 +90,8 @@ protected:
 
     CFont m_font;           //字体
 
+    SYSTEM_POWER_STATUS sysPowerStatus; // 系统电量信息
+
     int m_restart_cnt{ -1 };    //重新初始化次数
     unsigned int m_timer_cnt{};     //定时器触发次数（自程序启动以来的秒数）
     unsigned int m_monitor_time_cnt{};

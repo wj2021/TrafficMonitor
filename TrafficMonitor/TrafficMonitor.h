@@ -80,6 +80,8 @@ public:
 
     HICON m_notify_icons[MAX_NOTIFY_ICON];
 
+    HICON m_battery_icons[205];
+
     CTaskbarDefaultStyle m_taskbar_default_style;
 
     CPluginManager m_plugins;

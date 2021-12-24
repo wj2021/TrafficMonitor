@@ -987,6 +987,18 @@ BOOL CTrafficMonitorDlg::OnInitDialog()
 
     SetTimer(TASKBAR_TIMER, 100, NULL);
 
+    GetSystemPowerStatus(&sysPowerStatus);
+    if (sysPowerStatus.BatteryFlag != 128) // 128 为没有电池
+    {
+        SetTimer(BATTERY_TIMER, 10000, NULL);
+        // 加载电池电量的icon，浅色和深色各100个图标
+        for (int i = 0; i < 200; ++i) {
+            theApp.m_battery_icons[i] = (HICON)LoadImage(AfxGetInstanceHandle(), MAKEINTRESOURCE(1200+i), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR | LR_CREATEDIBSECTION);
+        }
+        // 默认电量100%
+        m_ntIcon.hIcon = theApp.m_battery_icons[198];
+    }
+    
     return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -1625,6 +1637,44 @@ void CTrafficMonitorDlg::OnTimer(UINT_PTR nIDEvent)
         {
             m_tBarDlg->AdjustWindowPos();
             m_tBarDlg->Invalidate(FALSE);
+        }
+    }
+
+    // 定时获取系统电量并显示在任务栏图标上
+    if (nIDEvent == BATTERY_TIMER)
+    {
+        // 获取系统电量
+        GetSystemPowerStatus(&sysPowerStatus);
+        if (sysPowerStatus.BatteryFlag != 128)
+        {
+            int batteryPercent = (int)sysPowerStatus.BatteryLifePercent;
+            if (batteryPercent <= 100)
+            {
+                // win10以上系統才有深色主题
+                if (theApp.m_win_version.GetMajorVersion() >= 10)
+                {
+                    bool light_mode = theApp.m_win_version.IsWindows10LightTheme();
+                    if (light_mode)
+                    {
+                        // 浅色模式显示黑色图标
+                        m_ntIcon.hIcon = theApp.m_battery_icons[(batteryPercent - 1) * 2 + 1];
+                    }
+                    else
+                    {
+                        // 深色模式显示白色图标
+                        m_ntIcon.hIcon = theApp.m_battery_icons[(batteryPercent - 1) * 2];
+                    }
+                }
+                else
+                {
+                    // win10以下系統显示黑色图标
+                    m_ntIcon.hIcon = theApp.m_battery_icons[(batteryPercent - 1) * 2 + 1];
+                }
+            }
+        }
+        else
+        {
+            KillTimer(BATTERY_TIMER);
         }
     }
 
