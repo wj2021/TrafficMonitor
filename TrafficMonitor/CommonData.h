@@ -168,6 +168,9 @@ public:
     void SetStrContained(const std::wstring& str, bool contained);
     void FromString(const std::wstring& str);
     std::wstring ToString() const;
+    void FromVector(const std::vector<std::wstring>& vec);
+    std::vector<std::wstring> ToVector() const;
+    std::set<std::wstring>& data();
 private:
     std::set<std::wstring> string_set;
 };
@@ -247,6 +250,11 @@ struct TaskbarItemColor //任务栏窗口每一项的颜色
 {
     COLORREF label{};   //标签颜色
     COLORREF value{};   //数值颜色
+
+    bool operator==(const TaskbarItemColor& item) const
+    {
+        return label == item.label && value == item.value;
+    }
 };
 
 //选项设置中“任务栏窗口设置”的数据
@@ -265,6 +273,7 @@ struct TaskBarSettingData : public PublicSettingData
     int dark_default_style{ 0 };                    //深色主题时使用的预设方案
     int light_default_style{ -1 };                  //浅色主题时使用的预设方案
     bool auto_set_background_color{ false };        //根据任务栏颜色自动设置背景色
+    bool auto_save_taskbar_color_settings_to_preset{};    //当启用“自动适应Windows10深色/浅色主题”时，是否在颜色设置有更改时自动将当前颜色设置保存到对应的预设
 
     CTaskbarItemOrderHelper item_order;
     unsigned int m_tbar_display_item{ TDI_UP | TDI_DOWN };      //任务栏窗口显示的项目
@@ -280,6 +289,12 @@ struct TaskBarSettingData : public PublicSettingData
     bool show_graph_dashed_box{ true }; //显示占用图虚线框
     int item_space{};                   //任务栏项目间距
     void ValidItemSpace();
+
+    bool show_netspeed_figure{ false };     //是否显示网速占用图
+    int netspeed_figure_max_value;          //网速占用图的最大值
+    int netspeed_figure_max_value_unit{};   //网速占用图最大值的单位（0: KB, 1: MB）
+    unsigned __int64 GetNetspeedFigureMaxValueInBytes() const;  //获取网速占用图的最大值（以字节为单位）
+
 };
 
 //选项设置中“常规设置”的数据
@@ -332,6 +347,8 @@ struct GeneralSettingData
         else
             hardware_monitor_item &= ~item_type;
     }
+
+    StringSet connections_hide;     //用于保存哪些网络要从“选择网络连接”子菜单项中隐藏
 };
 
 //定义监控时间间隔有效的最大值和最小值
@@ -340,9 +357,10 @@ struct GeneralSettingData
 
 enum class Alignment
 {
-    LEFT,
-    RIGHT,
-    CENTER
+    LEFT,       //左对齐
+    RIGHT,      //右对齐
+    CENTER,     //居中
+    SIDE        //两端对齐
 };
 
 //通过构造函数传递一个bool变量的引用，在构造时将其置为true，析构时置为false

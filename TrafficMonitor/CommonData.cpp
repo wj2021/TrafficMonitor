@@ -133,10 +133,38 @@ std::wstring StringSet::ToString() const
     return item_str;
 }
 
+void StringSet::FromVector(const std::vector<std::wstring>& vec)
+{
+    string_set.clear();
+    for (const auto& str : vec)
+        string_set.insert(str);
+}
+
+std::vector<std::wstring> StringSet::ToVector() const
+{
+    std::vector<std::wstring> vec;
+    for (const auto& str : string_set)
+        vec.push_back(str);
+    return vec;
+}
+
+std::set<std::wstring>& StringSet::data()
+{
+    return string_set;
+}
+
 void TaskBarSettingData::ValidItemSpace()
 {
     if (item_space < 0)
         item_space = 0;
     if (item_space > 32)
         item_space = 32;
+}
+
+unsigned __int64 TaskBarSettingData::GetNetspeedFigureMaxValueInBytes() const
+{
+    if (netspeed_figure_max_value_unit == 0)        //单位为KB
+        return static_cast<unsigned __int64>(netspeed_figure_max_value) * 1024;
+    else
+        return static_cast<unsigned __int64>(netspeed_figure_max_value) * 1024 * 1024;
 }

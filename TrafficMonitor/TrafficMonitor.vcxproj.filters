@@ -184,6 +184,12 @@
     <Filter Include="源文件和头文件\公共的类\CommonData">
       <UniqueIdentifier>{554c1c22-3662-416f-9a24-ad76bfb5eecd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件和头文件\对话框类\AppAlreadyRuningDlg">
+      <UniqueIdentifier>{cecf73f6-6479-4ce2-aefe-879c9363ab24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件和头文件\对话框类\选项设置对话框\SelectConnectionsDlg">
+      <UniqueIdentifier>{8a6deeaa-91ab-4c85-b293-ab1844f3ef82}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -393,7 +399,10 @@
       <Filter>源文件和头文件\公共的类\CommonData</Filter>
     </ClInclude>
     <ClInclude Include="AppAlreadyRuningDlg.h">
-      <Filter>源文件和头文件\头文件</Filter>
+      <Filter>源文件和头文件\对话框类\AppAlreadyRuningDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectConnectionsDlg.h">
+      <Filter>源文件和头文件\对话框类\选项设置对话框\SelectConnectionsDlg</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -584,7 +593,10 @@
       <Filter>源文件和头文件\公共的类\CommonData</Filter>
     </ClCompile>
     <ClCompile Include="AppAlreadyRuningDlg.cpp">
-      <Filter>源文件和头文件</Filter>
+      <Filter>源文件和头文件\对话框类\AppAlreadyRuningDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectConnectionsDlg.cpp">
+      <Filter>源文件和头文件\对话框类\选项设置对话框\SelectConnectionsDlg</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

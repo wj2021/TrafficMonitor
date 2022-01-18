@@ -4,6 +4,8 @@
 #include "DrawCommon.h"
 #include "IniHelper.h"
 #include "CommonData.h"
+#include "TaskbarItemOrderHelper.h"
+#include <list>
 
 // CTaskBarDlg 对话框
 #define TASKBAR_WND_HEIGHT theApp.DPI(32)				//任务栏窗口的高度
@@ -67,15 +69,24 @@ protected:
     struct ItemWidthInfo : public CommonDisplayItem
     {
         ItemWidth item_width;
+
+        ItemWidthInfo()
+        {}
+
+        ItemWidthInfo(const CommonDisplayItem& item)
+            : CommonDisplayItem(item)
+        {}
     };
 
     std::vector<ItemWidthInfo> m_item_widths;   //任务栏窗口每个部分的宽度
-    std::map<DisplayItem, int> m_item_display_width;    //任务栏窗口每个部分实际显示的宽度
+    std::map<CommonDisplayItem, CRect> m_item_rects;    //任务栏窗口每个部分的矩形区域
+    CommonDisplayItem m_clicked_item;           //鼠标点击的任务栏项目
 
     int m_min_bar_width;	//最小化窗口缩小宽度后的宽度
     int m_min_bar_height;	//最小化窗口缩小高度后的高度（用于任务栏在屏幕左侧或右侧时）
 
-    std::map<DisplayItem, CList<int, int>> m_map_history_data;  //保存各项数据历史数据的链表，链表保存按照时间顺序，越靠近头部数据越新
+    std::map<DisplayItem, std::list<int>> m_map_history_data;  //保存各项数据历史数据的链表，链表保存按照时间顺序，越靠近头部数据越新
+    std::map<DisplayItem, int> m_history_data_count;            //统计添加到历史数据链表的次数
 
     int m_left_space{};			//最小化窗口和二级窗口窗口左侧的边距
     int m_top_space{};			//最小化窗口和二级窗口窗口顶部的边距（用于任务栏在屏幕左侧或右侧时）
@@ -92,6 +103,11 @@ protected:
     CString GetMouseTipsInfo();		//获取鼠标提示
 
     void AddHisToList(DisplayItem item_type, int current_usage_percent);		//将当前利用率数值添加进链表
+
+    int CalculateNetspeedPercent(unsigned __int64 net_speed);     //计算网速占网速占用图的最大值的百分比
+
+    //判断一个点在哪个显示项目的区域内，并保存到m_clicked_item
+    void CheckClickedItem(CPoint point);
 
     //绘制任务栏窗口中的一个显示项目
     //  drawer: 绘图类的对象
@@ -123,18 +139,11 @@ public:
     int GetErrorCode() const { return m_error_code; }
     bool IsTasksbarOnTopOrBottom() { return m_taskbar_on_top_or_bottom; }
 
+    static bool IsItemShow(DisplayItem item);
     static bool IsShowCpuMemory();
     static bool IsShowNetSpeed();
-    static bool IsShowUp();
-    static bool IsShowDown();
-    static bool IsShowCpu();
-    static bool IsShowMemory();
-    static bool IsShowGpu();
-    static bool IsShowCpuTemperature();
-    static bool IsShowGpuTemperature();
-    static bool IsShowHddTemperature();
-    static bool IsShowMainboardTemperature();
-    static bool IsShowHddUsage();
+
+    CommonDisplayItem GetClickedItem() const { return m_clicked_item; }
 
     DECLARE_MESSAGE_MAP()
 

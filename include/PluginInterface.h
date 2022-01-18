@@ -86,7 +86,7 @@ public:
      * @attention 插件开发者不应该修改这里的返回值，也不应该重写此虚函数。
      * @return  int
      */
-    virtual int GetAPIVersion() const { return 1; }
+    virtual int GetAPIVersion() const { return 2; }
 
     /**
      * @brief   获取插件显示项目的对象
@@ -118,7 +118,7 @@ public:
      *  返回值为OR_OPTION_NOT_PRVIDED则认为插件不提供选项设置对话框。
      * @return  ITMPlugin::OptionReturn
      */
-    virtual OptionReturn ShowOptionsDialog(void* hParent) { return OR_OPTION_NOT_PROVIDED; };
+    virtual OptionReturn ShowOptionsDialog(void* hParent) { return OR_OPTION_NOT_PROVIDED; }
 
     /** 插件信息的索引 */
     enum PluginInfoIndex
@@ -155,7 +155,46 @@ public:
     /**
      * @brief   主程序调用此函数以向插件传递所有获取到的监控信息
      */
-    virtual void OnMonitorInfo(const MonitorInfo& monitor_info) {};
+    virtual void OnMonitorInfo(const MonitorInfo& monitor_info) {}
+
+    /**
+     * @brief   获取插件要在鼠标提示中显示的文本
+     */
+    virtual const wchar_t* GetTooltipInfo() { return L""; }
+
+    enum ExtendedInfoIndex
+    {
+        EI_LABEL_TEXT_COLOR,    //绘图的标签文本颜色
+        EI_VALUE_TEXT_COLOR,    //绘图的数值文本颜色
+        EI_DRAW_TASKBAR_WND,    //是否绘制任务栏窗口
+
+        //主窗口选项设置
+        EI_NAIN_WND_NET_SPEED_SHORT_MODE,   //网速显示简洁模式
+        EI_MAIN_WND_SPERATE_WITH_SPACE,     //数值和单位使用空格分隔
+        EI_MAIN_WND_UNIT_BYTE,              //网速单位是否使用B（字节）
+        EI_MAIN_WND_UNIT_SELECT,            //网速单位选择（0：自动，1：固定为KB/s，2：固定为MB/s）
+        EI_MAIN_WND_NOT_SHOW_UNIT,          //不显示网速单位
+        EI_MAIN_WND_NOT_SHOW_PERCENT,       //不显示百分号
+
+        //任务栏窗口设置
+        EI_TASKBAR_WND_NET_SPEED_SHORT_MODE,    //网速显示简洁模式
+        EI_TASKBAR_WND_SPERATE_WITH_SPACE,      //数值和单位使用空格分隔
+        EI_TASKBAR_WND_VALUE_RIGHT_ALIGN,       //数值右对齐
+        EI_TASKBAR_WND_NET_SPEED_WIDTH,         //网速数据宽度
+        EI_TASKBAR_WND_UNIT_BYTE,               //网速单位是否使用B（字节）
+        EI_TASKBAR_WND_UNIT_SELECT,             //网速单位选择（0：自动，1：固定为KB/s，2：固定为MB/s）
+        EI_TASKBAR_WND_NOT_SHOW_UNIT,           //不显示网速单位
+        EI_TASKBAR_WND_NOT_SHOW_PERCENT,        //不显示百分号
+    };
+
+    /**
+     * @brief   主程序调用此函数以向插件传递更多信息
+     * @param   ExtendedInfoIndex index 信息的索引，用于区分向插件传递的信息
+     * @param   const wchar_t* data 传递的数据
+     * @return  void
+     */
+    virtual void OnExtenedInfo(ExtendedInfoIndex index, const wchar_t* data) {}
+
 };
 
 /*
@@ -163,4 +202,16 @@ public:
 * ITMPlugin* TMPluginGetInstance();
 *   函数返回一个ITMPlugin接口的对象的指针。
 *   此对象通常应该为一个全局或静态的对象，在程序运行结束前，它都不应该被释放。
+*/
+
+
+/*
+* 更新记录：
+* -------------------------------------------------------------------------
+* API version |                       更新内容
+* -------------------------------------------------------------------------
+*     1       | 第一个版本
+* -------------------------------------------------------------------------
+*     2       | 新增 ITMPlugin::GetTooltipInfo 函数
+* -------------------------------------------------------------------------
 */
