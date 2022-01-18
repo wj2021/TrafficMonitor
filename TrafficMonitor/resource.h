@@ -176,7 +176,6 @@
 #define IDS_SPECIFIC_APP                301
 #define IDB_NOTIFY_ICON_PREVIEW_LIGHT   302
 #define IDS_EXE_FILTER                  302
-#define IDR_TASKBAR_STYLE_MENU          303
 #define IDS_PRESET                      303
 #define IDS_LIGHT_MODE                  304
 #define IDB_BITMAP3                     305
@@ -245,6 +244,7 @@
 #define IDD_APP_ALREAD_RUNING_DIALOG    337
 #define IDS_GOTO_GITEE                  338
 #define IDS_USAGE_PERCENTAGE            339
+#define IDD_SELECT_CONNECTIONS_DIALOG   339
 #define IDS_MEMORY_USED                 340
 #define IDS_MEMORY_AVAILABLE            341
 #define IDS_DOTNET_NOT_INSTALLED_TIP    342
@@ -276,6 +276,13 @@
 #define IDS_WEEK_VIEW                   368
 #define IDS_WEEK_NUM                    369
 #define IDS_URL                         370
+#define IDS_PLUGIN_VERSION_NOT_SUPPORT  371
+#define IDS_MODIFY_PRESET               372
+#define IDS_SELECT_AT_LEASE_ONE_WARNING 373
+#define IDS_AUTO_SAVE_TO_PRESET_TIP     374
+#define IDS_TOTAL_NET_SPEED             375
+#define IDS_SHOW_RESOURCE_USAGE_GRAPH_TIP 376
+#define IDS_SHOW_NET_SPEED_GRAPH_TIP    377
 #define IDC_STATIC_INFO                 1001
 #define IDC_STATIC1                     1002
 #define IDC_STATIC_DOWN                 1002
@@ -688,6 +695,13 @@
 
 
 
+#define IDC_PLUGIN_DEV_GUID_STATIC      1153
+#define IDC_PLUGIN_DOWNLOAD_STATIC      1154
+#define IDC_SELECT_CONNECTIONS_BUTTON   1155
+#define IDC_AUTO_SAVE_TO_PRESET_CHECK   1156
+#define IDC_SHOW_NET_SPEED_FIGURE_CHECK 1157
+#define IDC_NET_SPEED_FIGURE_MAX_VALUE_EDIT 1158
+#define IDC_NET_SPEED_FIGURE_MAX_VALUE_UNIT_COMBO 1159
 #define ID_32771                        32771
 #define ID_NETWORK_INFO                 32772
 #define ID_32773                        32773
@@ -763,43 +777,30 @@
 #define ID_32845                        32845
 #define ID_CHECK_UPDATE                 32846
 #define ID_SHOW_MAIN_WND                32847
-#define ID_1_32848                      32848
-#define ID_1_32849                      32849
-#define ID_1_32850                      32850
-#define ID_1_32851                      32851
-#define ID_DEFAULT_STYLE1               32852
-#define ID_DEFAULT_STYLE2               32853
-#define ID_DEFAULT_STYLE3               32854
-#define ID_MODIFY_DEFAULT_STYLE1        32855
-#define ID_MODIFY_DEFAULT_STYLE2        32856
-#define ID_MODIFY_DEFAULT_STYLE3        32857
-#define ID_1_32858                      32858
-#define ID_LIGHT_MODE_STYLE             32859
-#define ID_32860                        32860
-#define ID_32861                        32861
-#define ID_32862                        32862
-#define ID_SHOW_NET_SPEED               32863
-#define ID_2_32864                      32864
-#define ID_FIRST_DAY_OF_WEEK_SUNDAY     32865
-#define ID_FIRST_DAY_OF_WEEK_MONDAY     32866
-#define ID_CALENDAR_JUMP_TO_TODAY       32867
-#define ID_FREQUENTY_ASKED_QUESTIONS    32868
-#define ID_CMD_TEST                     32869
-#define ID_SHOW_UP_SPEED                32870
-#define ID_SHOW_DOWN_SPEED              32871
-#define ID_SHOW_CPU_USAGE               32872
-#define ID_SHOW_MEMORY_USAGE            32873
-#define ID_SHOW_CPU_TEMPERATURE         32874
-#define ID_SHOW_GPU_TEMPERATURE         32875
-#define ID_SHOW_HDD_TEMPERATURE         32876
-#define ID_SHOW_MAIN_BOARD_TEMPERATURE  32877
-#define ID_SHOW_GPU                     32878
-#define ID_SHOW_HDD                     32879
-#define ID_UPDATE_LOG                   32880
-#define ID_HELP_32881                   32881
-#define ID_32882                        32882
-#define ID_PLUGIN_MANAGE                32883
-#define ID_SHOW_PLUGIN_ITEM_START       32884
+#define ID_DEFAULT_STYLE1               32848
+#define ID_DEFAULT_STYLE_MAX            32857
+#define ID_MODIFY_DEFAULT_STYLE1        32858
+#define ID_MODIFY_DEFAULT_STYLE_MAX     32867
+#define ID_LIGHT_MODE_STYLE             32868
+#define ID_SHOW_NET_SPEED               32869
+#define ID_FIRST_DAY_OF_WEEK_SUNDAY     32870
+#define ID_FIRST_DAY_OF_WEEK_MONDAY     32871
+#define ID_CALENDAR_JUMP_TO_TODAY       32872
+#define ID_FREQUENTY_ASKED_QUESTIONS    32873
+#define ID_CMD_TEST                     32874
+#define ID_SHOW_UP_SPEED                32875
+#define ID_SHOW_DOWN_SPEED              32876
+#define ID_SHOW_CPU_USAGE               32877
+#define ID_SHOW_MEMORY_USAGE            32878
+#define ID_SHOW_CPU_TEMPERATURE         32879
+#define ID_SHOW_GPU_TEMPERATURE         32880
+#define ID_SHOW_HDD_TEMPERATURE         32881
+#define ID_SHOW_MAIN_BOARD_TEMPERATURE  32882
+#define ID_SHOW_GPU                     32883
+#define ID_SHOW_HDD                     32884
+#define ID_UPDATE_LOG                   32885
+#define ID_PLUGIN_MANAGE                32886
+#define ID_SHOW_PLUGIN_ITEM_START       32887
 #define ID_SHOW_PLUGIN_ITEM_MAX         33140
 #define ID_SELETE_CONNECTION            33141
 #define ID_SELECT_ALL_CONNECTION        33142
@@ -807,16 +808,18 @@
 #define ID_PLUGIN_DETAIL                33399
 #define ID_PLUGIN_OPTIONS               33400
 #define ID_PLUGIN_DISABLE               33401
-#define ID_33402                        33402
+#define ID_SHOW_TOTAL_SPEED             33402
 #define ID_OPEN_TASK_MANAGER            33403
+#define ID_                             33404
+#define ID_DISPLAY_SETTINGS             33405
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        339
-#define _APS_NEXT_COMMAND_VALUE         33404
-#define _APS_NEXT_CONTROL_VALUE         1153
+#define _APS_NEXT_RESOURCE_VALUE        341
+#define _APS_NEXT_COMMAND_VALUE         33406
+#define _APS_NEXT_CONTROL_VALUE         1160
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
